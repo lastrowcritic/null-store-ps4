@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "example",
+      "label": "Example Store",
+      "base": "https://games.example.org",
+      "listing": "/games/",
+      "pageListing": "/games/page/{page}/",
+      "maxPages": 5,
+      "enabled": true,
+      "shape": {
+        "item": "article.card",
+        "title": ".card-title",
+        "size": ".card-size",
+        "imageAttributes": ["data-src", "src"],
+        "linkClasses": ["download-button"],
+        "linkMarkers": [".torrent", "do=download"],
+        "blocked": ["data-locked=1"]
+      }
+    }
+  ]
+}

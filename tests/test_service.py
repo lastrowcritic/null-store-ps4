@@ -39,7 +39,9 @@ class ServiceTests(unittest.TestCase):
         helper=transfer_fixture.Transfers();self.addCleanup(helper.doCleanups)
         meta,tracker,peer,payload=helper.setup_transfer(root);peer.block_delay=.18
         env=os.environ.copy();env.update(PORTAL_TEST_META=str(meta),PORTAL_TEST_TRACKER=str(tracker))
-        app=root/'app';app.mkdir();log=(root/'service.log').open('wb');self.addCleanup(log.close)
+        app=root/'app';app.mkdir()
+        (app/'sources.json').write_text('{"version":1,"sources":[{"id":"test","label":"Test","base":"https://example.org","listing":"/","shape":{"item":".card","title":".title","linkClasses":["dl__btn"],"linkMarkers":[".torrent"]}}]}\n')
+        log=(root/'service.log').open('wb');self.addCleanup(log.close)
         process=subprocess.Popen([str(ROOT/'build/portal-service-host'),str(app),str(port)],env=env,stdout=log,stderr=log)
         def stop():
             if process.poll() is None:
@@ -107,8 +109,8 @@ class ServiceTests(unittest.TestCase):
             root=Path(d).resolve()
             with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
             app,service,peer,payload,pid=self.fixture(root,port)
-            game=u32(773)+b''.join(string(s) for s in ('Generated test','','','https://ps4torrent.net/773-test.html',''))
-            rpc(port,u32(5)+game+string('generated.torrent')+string('https://ps4torrent.net/index.php?do=download&id=775')+string((root/'sample.torrent').read_bytes()))
+            game=u32(773)+b''.join(string(s) for s in ('Generated test','','','https://example.org/773-test.html',''))
+            rpc(port,u32(5)+game+string('generated.torrent')+string('https://example.org/index.php?do=download&id=775')+string((root/'sample.torrent').read_bytes()))
             rpc(port,u32(6)+u32(1));rpc(port,u32(6)+u32(1))
             for _ in range(100):
                 state=queue(port)[0]['state']
@@ -119,7 +121,7 @@ class ServiceTests(unittest.TestCase):
             self.assertIn(queue(port)[0]['state'],(0,1,4))
             rpc(port,u32(8)+u32(1));self.assertEqual(queue(port)[0]['state'],6)
             rpc(port,u32(10)+u32(1));self.assertEqual(queue(port),[])
-            rpc(port,u32(5)+game+string('generated.torrent')+string('https://ps4torrent.net/index.php?do=download&id=775')+string((root/'sample.torrent').read_bytes()))
+            rpc(port,u32(5)+game+string('generated.torrent')+string('https://example.org/index.php?do=download&id=775')+string((root/'sample.torrent').read_bytes()))
             self.assertEqual(queue(port)[0]['id'],1)
             rpc(port,u32(9));self.assertEqual(service.wait(timeout=8),0)
 if __name__=='__main__':unittest.main()

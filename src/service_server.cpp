@@ -2,6 +2,7 @@
 #include "net_compat.h"
 #include "service_protocol.h"
 #include "service_log.h"
+#include "sources.h"
 #include <sys/file.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
@@ -50,6 +51,8 @@ int runPortalService(const std::string&root,DownloadFetch fetch,int port){
     signal(SIGTERM,quitService);signal(SIGINT,quitService);signal(SIGPIPE,SIG_IGN);serviceQuit=0;
     int result=0;{
         SERVICE_LOG("server: constructing download manager");
+        std::string sourcesError;
+        if(!loadSourcesIntoTable(root+"/sources.json",sourcesError))SERVICE_LOG("sources.json rejected: %s",sourcesError.c_str());
         DownloadManager manager(root,fetch);
         SERVICE_LOG("server: download manager constructed");
         errno=0;bool started=manager.start();int startError=errno;

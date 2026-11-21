@@ -1,7 +1,7 @@
 <div align="center">
   <img src="screenshots/nullstore-logo.png" width="160" alt="NULL_store logo">
   <h1>NULL_store</h1>
-  <p><strong>PS4 homebrew game catalogue and BitTorrent download manager for HEN-enabled consoles.</strong></p>
+  <p><strong>Source-driven game library and BitTorrent download manager for HEN-enabled consoles.</strong></p>
   <p>Browse game listings, queue torrent downloads, install compatible PKG files, or keep transfers running with the optional background service.</p>
   <p>YOUR SYSTEM. YOUR RULES.</p>
   <p>
@@ -47,15 +47,19 @@ You can also use the [optional Background Service PKG](../../releases/latest/dow
 
 The service does not download in rest mode or start automatically after a reboot. Reopen NULL_store after restarting the console.
 
-## PS4 game catalogue and BitTorrent downloads
+## Your sources, your library
 
-NULL_store starts with a bundled catalogue and refreshes public listing pages in the background. Press **Options** to refresh. Starting a download fetches the torrent from its source and contacts BitTorrent trackers to find peers. Peer availability depends on the torrent and your network, so some transfers may start slowly or find no usable peers.
+NULL_store ships no catalogue and no built-in sites. You add the sources you want, and the app builds a library from their public listing pages. Open **Sources** in the app (L3) and scan the QR code it shows with your phone: the page lets you add, test and remove sources. A `sources.json` file on a USB stick works too. **Options** refreshes the library.
+
+Each source declares its base URL, its listing page pattern, and how its game cards look. [SOURCES.md](SOURCES.md) documents the format.
+
+Starting a download fetches the torrent file from that source's game page and contacts BitTorrent trackers to find peers. Peer availability depends on the torrent and your network, so some transfers may start slowly or find no usable peers. Only download content you have the right to use.
 
 Open **Downloads**, press **L3**, then choose **Test torrent connection (one piece only)** to test with the public-domain *Big Buck Bunny* torrent. It downloads one verified piece and stops at about 256 KB. [See the PS4 test guide.](TESTING.md)
 
 ## Known limitations and test status
 
-- The same game or release may appear more than once because entries from different catalogue sources are kept separately.
+- The same game or release may appear more than once because entries from different sources are kept separately.
 - Transfers can be slow or fail when trackers are unavailable or no compatible peers can be reached.
 - Package installation supports complete compatible `.pkg` files; it does not extract archives or join split packages.
 - The Background Service requires HEN to remain active and the console to stay awake. Rest mode and automatic startup are not supported.

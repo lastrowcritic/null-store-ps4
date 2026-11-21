@@ -18,7 +18,7 @@ static void awaitMode(DownloadController&controller,const std::string&root,const
 }
 int main(int argc,char**argv){
     assert(argc==2);char folder[]="/tmp/nullstore-handoff-XXXXXX";assert(mkdtemp(folder));std::string root=folder;
-    std::string rows="8\t773\tComplete generated fixture\thttps://ps4torrent.net/8.torrent\t4\t16\t16\t\thttps://ps4torrent.net/8.html\t\t0\t0\t"+root+"/downloads/8\n12\t774\tPaused generated fixture\thttps://ps4torrent.net/12.torrent\t3\t4\t32\t\thttps://ps4torrent.net/12.html\t\t0\t0\t/mnt/usb0/NULL_store/downloads/12\n";
+    std::string rows="8\t773\tComplete generated fixture\thttps://example.org/8.torrent\t4\t16\t16\t\thttps://example.org/8.html\t\t0\t0\t"+root+"/downloads/8\n12\t774\tPaused generated fixture\thttps://example.org/12.torrent\t3\t4\t32\t\thttps://example.org/12.html\t\t0\t0\t/mnt/usb0/NULL_store/downloads/12\n";
     assert(saveQueue(root+"/downloads.tsv",rows));assert(mkdir((root+"/downloads").c_str(),0700)==0);assert(mkdir((root+"/downloads/8").c_str(),0700)==0);assert(writeFile(root+"/downloads/8/fixture.bin","generated sample"));
     {
         DownloadController controller(root,fetch);assert(controller.start());

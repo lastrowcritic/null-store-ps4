@@ -46,7 +46,7 @@ def verify(folder,catalog=False):
         if not actual.is_file():raise RuntimeError(f'Missing from extracted PKG: {relative}')
         if hashlib.sha256(actual.read_bytes()).digest()!=hashlib.sha256(expected.read_bytes()).digest():raise RuntimeError(f'PKG payload differs from source: {relative}')
     if catalog:
-        for name in ('eboot.bin','assets/catalog.tsv','assets/covers.pack','assets/covers.idx','assets/font.ttf','sce_module/libc.prx','sce_module/libSceFios2.prx'):
+        for name in ('eboot.bin','assets/covers.pack','assets/covers.idx','assets/font.ttf','sce_module/libc.prx','sce_module/libSceFios2.prx'):
             actual=folder/name;expected=ROOT/name
             if not actual.is_file() or hashlib.sha256(actual.read_bytes()).digest()!=hashlib.sha256(expected.read_bytes()).digest():raise RuntimeError(f'Catalogue payload differs from source: {name}')
         print('Catalogue payload verified: boot executable, packed artwork, index, metadata, font and runtime libraries match.')

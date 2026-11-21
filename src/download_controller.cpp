@@ -59,7 +59,7 @@ void DownloadController::loop(){
             portalNetworkTrace("app game-page start game=%d source=%d",gameToRead.id,source);
 #endif
             bool ok=sourceURL(gameToRead.url)&&fetch(gameToRead.url,html,4*1024*1024,sourceOrigin(source)+"/");
-            auto found=ok?torrentLinks(html,source):std::vector<TorrentLink>{};
+            auto found=ok?parseDownloadLinks(html,source):std::vector<TorrentLink>{};
             std::string error=!ok?"Could not read the game page. Check internet and retry.":found.empty()?"No public torrent link found on this game page.":"";
 #ifndef PORTAL_HOST
             portalNetworkTrace("app game-page result game=%d ok=%d bytes=%zu links=%zu result=%s",gameToRead.id,ok?1:0,html.size(),found.size(),error.empty()?"ok":error.c_str());

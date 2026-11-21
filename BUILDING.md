@@ -12,7 +12,7 @@ Generated packages, console runtime modules, the compatibility helper, cover ima
 
 - `sce_module/libc.prx` and `sce_module/libSceFios2.prx`, from a compatible OpenOrbis toolchain setup.
 - `assets/service/compat-jb.prx`, the Itemzflow compatibility module linked in the README, and `assets/service/COMPAT-PROVENANCE.txt`. Follow the upstream license and retain its notices when redistributing it.
-- `assets/covers/*.jpg`, then `make assets/covers.pack`. Cover images can be collected for the bundled catalogue with `mkdir -p assets/covers && python3 tools/scrape_sources.py --covers-only`; third-party sites can be unavailable or change their pages. Respect site terms and artwork rights.
+- `assets/covers/*.jpg`, then `make assets/covers.pack`. Optional: the app caches cover art from your own sources at runtime, so this archive is only needed if you want artwork packaged.
 
 After supplying these inputs, run `make` for the store and `make service-package` for the setup app. The Makefile also generates the service executable and package metadata. Rebuilding has not been verified from a fresh toolchain checkout; missing tools or compatible runtime modules may need additional setup.
 
